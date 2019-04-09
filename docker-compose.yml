@@ -31,7 +31,7 @@ services:
     volumes:
       - fedora:/data
     environment:
-     - JAVA_OPTIONS=-Dfcrepo.modeshape.configuration=classpath:/config/file-simple/repository.json -Dfcrepo.home=/data
+      - JAVA_OPTIONS=-Dfcrepo.modeshape.configuration=classpath:/config/file-simple/repository.json -Dfcrepo.home=/data
     networks:
       internal:
   solr:
@@ -59,7 +59,7 @@ services:
     volumes:
       - streaming:/data
     ports:
-      - "8880:80"
+      - '8880:80'
     networks:
       external:
   redis:
@@ -70,7 +70,7 @@ services:
     image: avalonmediasystem/avalon:6.x-dev
     build:
       context: ./docker
-    command: "/rails_init-dev.sh"
+    command: '/rails_init-dev.sh'
     depends_on:
       - db
       - fedora
@@ -126,7 +126,7 @@ services:
       - gems:/home/app/gems
       - npms:/home/app/node_modules
     ports:
-      - "3000:80"
+      - '3000:80'
     networks:
       internal:
       external:

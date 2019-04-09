@@ -5568,6 +5568,10 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.4.tgz#90f336a68c3a29a096a3d648ab80e87ec61482a2"
   integrity sha512-PVadd+WaUDOAciICm/J1waJaSvgq+4rHE/K70j0PFqKhkTBsPv/82UGQJNXAngz1fOQLLxI6z1sEDmJDQhCTAA==
 
+"react-structural-metadata-editor@https://github.com/avalonmediasystem/react-structural-metadata-editor.git":
+  version "1.0.0"
+  resolved "https://github.com/avalonmediasystem/react-structural-metadata-editor.git#96581e6f794ec3db6ce6282ba73f1a6a3c97d0c2"
+
 react@^16.8.4:
   version "16.8.4"
   resolved "https://registry.yarnpkg.com/react/-/react-16.8.4.tgz#fdf7bd9ae53f03a9c4cd1a371432c206be1c4768"
