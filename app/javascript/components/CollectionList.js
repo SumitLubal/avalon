@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import Collection from './Collection';
 import CollectionCard from './collections/CollectionCard';
 import './collections/Collection.css';
 import CollectionListStickyUtils from './collections/CollectionListStickyUtils';
@@ -10,15 +9,12 @@ class CollectionList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filter: '',
+      filter: props.filter ? props.filter : '',
       searchResult: [],
       filteredResult: [],
       maxItems: 3,
       sort: 'unit'
     };
-    if (this.props.filter) {
-      this.state.filter = this.props.filter;
-    }
   }
 
   componentDidMount() {
@@ -36,20 +32,20 @@ class CollectionList extends Component {
     }
   }
 
-  retrieveResults() {
-    let component = this;
+  async retrieveResults() {
     let url = this.props.baseUrl;
-    console.log('Performing search: ' + url);
-    Axios({ url: url }).then(function(response) {
+
+    try {
+      const response = await Axios({ url });
       console.log(response);
-      component.setState({
+      this.setState({
         searchResult: response.data,
-        filteredResult: component.filterCollections(
-          component.state.filter,
-          response.data
-        )
+        filteredResult: this.filterCollections(this.state.filter, response.data)
       });
-    });
+    } catch (error) {
+      console.log('Error in retrieveResults(): ', error);
+      Promise.resolve([]);
+    }
   }
 
   groupByUnit(list) {
@@ -123,7 +119,7 @@ class CollectionList extends Component {
   };
 
   render() {
-    const { filter, sort } = this.state;
+    const { filter, sort, filteredResult, maxItems } = this.state;
     return (
       <div>
         <CollectionListStickyUtils
@@ -133,34 +129,45 @@ class CollectionList extends Component {
           handleSortChange={this.handleSortChange}
         />
         <div className="collection-list">
-          {this.state.sort == 'az' ? (
-            <ul className="mt-3">
-              {this.sortByAZ(this.state.filteredResult).map((col, index) => {
+          {sort === 'az' ? (
+            <ul className="row list-unstyled">
+              {this.sortByAZ(filteredResult).map((col, index) => {
                 return (
-                  <Collection
-                    key={index}
-                    attributes={col}
-                    showUnit={true}
-                  ></Collection>
+                  <li className="col-sm-4" key={col.id}>
+                    <CollectionCard
+                      attributes={col}
+                      showUnit={true}
+                    ></CollectionCard>
+                  </li>
                 );
               })}
             </ul>
           ) : (
-            this.groupByUnit(this.state.filteredResult).map(
-              (unitArr, index) => {
-                let unit = unitArr[0];
-                let collections = this.sortByAZ(unitArr[1]);
+            this.groupByUnit(filteredResult).map((unitArr, index) => {
+              let unit = unitArr[0];
+              let collections = this.sortByAZ(unitArr[1]);
 
-                return (
-                  <div key={unit}>
-                    <h2 class="headline collection-list-unit-headline">
-                      {unit}
-                    </h2>
+              return (
+                <div key={unit}>
+                  <h2 className="headline collection-list-unit-headline">
+                    {unit}
+                  </h2>
 
+                  <div className="row">
+                    {collections.slice(0, maxItems).map((col, index) => {
+                      return (
+                        <div className="col-sm-4" key={col.id}>
+                          <CollectionCard attributes={col} showUnit={false} />
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="collapse" id={'collapse' + index}>
                     <div className="row">
                       {collections
-                        .slice(0, this.state.maxItems)
-                        .map((col, index) => {
+                        .slice(maxItems, collections.length)
+                        .map(col => {
                           return (
                             <div className="col-sm-4" key={col.id}>
                               <CollectionCard
@@ -171,34 +178,17 @@ class CollectionList extends Component {
                           );
                         })}
                     </div>
-
-                    <div className="collapse" id={'collapse' + index}>
-                      <div className="row">
-                        {collections
-                          .slice(this.state.maxItems, collections.length)
-                          .map(col => {
-                            return (
-                              <div className="col-sm-4" key={col.id}>
-                                <CollectionCard
-                                  attributes={col}
-                                  showUnit={false}
-                                />
-                              </div>
-                            );
-                          })}
-                      </div>
-                    </div>
-
-                    <ButtonCollectionListShowAll
-                      collectionsLength={collections.length}
-                      maxItems={this.state.maxItems}
-                      handleShowAll={this.handleShowAll}
-                      index={index}
-                    />
                   </div>
-                );
-              }
-            )
+
+                  <ButtonCollectionListShowAll
+                    collectionsLength={collections.length}
+                    maxItems={maxItems}
+                    handleShowAll={this.handleShowAll}
+                    index={index}
+                  />
+                </div>
+              );
+            })
           )}
         </div>
       </div>

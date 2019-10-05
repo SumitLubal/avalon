@@ -12,7 +12,7 @@ const CollectionCard = ({ attributes, showUnit }) => {
           </a>
         )}
       </div>
-      <div class="panel-body">
+      <div className="panel-body">
         <div className="collection-card-description">
           <h4>
             <a href={attributes.url}>{attributes.name}</a>

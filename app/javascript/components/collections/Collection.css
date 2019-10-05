@@ -123,14 +123,6 @@ li.search-within-search-result {
   .search-within-facets {
     padding-left: 15px;
   }
-
-  .collection-list ul {
-    padding: 0;
-  }
-
-  .collection-list li.row {
-    margin-right: 0;
-  }
 }
 
 @media (min-width: 32em) {
@@ -193,10 +185,6 @@ li.search-within-search-result {
 .sort-btn:hover {
   color: #2a5459;
   background-color: #ffcf08;
-}
-
-.collection-list ul {
-  list-style: none;
 }
 
 .search-input {
