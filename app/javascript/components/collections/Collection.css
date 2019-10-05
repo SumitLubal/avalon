@@ -6,6 +6,31 @@
   /* min-width: 25rem; */
 }
 
+/* Collection List */
+.collection-list {
+  margin-bottom: 3rem;
+}
+
+.collection-list-unit-headline {
+  font-size: 24px;
+}
+
+.collection-list-sticky-utils {
+  margin-bottom: 3rem;
+}
+
+.collection-list-view-toggle-label {
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+/* Collection cards */
+.collection-card {
+}
+.collection-card-description {
+  padding: 2rem 0;
+}
+
 ul.search-within-search-results {
   padding-inline-start: 1rem;
   list-style-type: none;
@@ -14,10 +39,6 @@ ul.search-within-search-results {
 
 li.search-within-search-result {
   padding-bottom: 2rem;
-}
-
-form {
-  display: inline-block;
 }
 
 .mt-3 {
@@ -33,32 +54,11 @@ form {
   border: 0;
 }
 
-.stickyUtils {
-    /* position: fixed; */
-    /* z-index: 999;
-    width: 100%;
-    padding-right: 20px;
-    background-color: white; */
-}
-
-.show-all {
-  /* margin-left: 15px; */
-}
-
-.row {
-  /* width: 100%; */
-  /* margin: 0; */
-}
-
-.description h4 {
-  margin-top: 0  ;
-}
-
-@media(max-width:767px) {
+@media (max-width: 767px) {
   .page-header {
     padding-left: 15px;
   }
-  
+
   .description {
     padding: 1.5rem 3rem;
   }
@@ -112,8 +112,6 @@ form {
 }
 
 @media (min-width: 24em) {
-
-
   .search-bar {
     width: 100%;
   }
@@ -126,20 +124,12 @@ form {
     padding-left: 15px;
   }
 
-  .collection-list {
-    margin-left: -16px;
-  }
-
   .collection-list ul {
     padding: 0;
   }
 
   .collection-list li.row {
     margin-right: 0;
-  }
-
-  .show-all {
-    margin-left: 16px;
   }
 }
 
@@ -170,7 +160,6 @@ form {
 }
 
 @media (min-width: 48em) {
-
   .search-bar {
     width: 50%;
   }
@@ -181,14 +170,6 @@ form {
 
   .search-within-facet {
     max-width: 250px;
-  }
-
-  .collection-list {
-    margin-left: 0px;
-  }
-
-  .show-all {
-    margin-left: 0px;
   }
 }
 
@@ -207,25 +188,15 @@ form {
   text-transform: uppercase;
 }
 
-.sort-btn.active, .sort-btn.active:hover, .sort-btn:hover {
+.sort-btn.active,
+.sort-btn.active:hover,
+.sort-btn:hover {
   color: #2a5459;
   background-color: #ffcf08;
 }
 
 .collection-list ul {
   list-style: none;
-}
-
-.collection-filter-bar {
-  width: 50%;
-}
-
-.collection-filter {
-  width: 100%;
-}
-
-.collection {
-  margin-bottom: 20px;
 }
 
 .search-input {
