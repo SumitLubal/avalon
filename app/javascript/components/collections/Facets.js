@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './collections/Collection.css';
+import './Collection.css';
 
 class Facets extends Component {
   constructor(props) {
@@ -33,23 +33,34 @@ class Facets extends Component {
   render() {
     if (this.props.facets != {}) {
       return (
-        <div>
+        <div className="inline">
+          <button
+            href="#search-within-facets"
+            data-toggle="collapse"
+            role="button"
+            aria-expanded="false"
+            aria-controls="object_tree"
+            className="btn btn-default mb-3 search-within-facets-btn"
+          >
+            Filters
+          </button>
           <div
             id="search-within-facets"
             className="search-within-facets collapse"
           >
             {this.props.facets.map((facet, index) => {
               if (facet.items.length === 0) {
-                return <div key={facet.name}></div>;
+                return <div></div>;
               }
               return (
-                <div key={facet.name} className="search-within-facet">
+                <div className="search-within-facet">
                   <h5 className="page-header upper">{facet.label}</h5>
                   <div className="">
                     <ul className="facet-values list-unstyled">
                       {facet.items.map((item, index) => {
+                        console.log('TCL: Facets -> render -> index', index);
                         return (
-                          <li key={item.label}>
+                          <li key={index}>
                             {this.isFacetApplied(facet, item) ? (
                               <span className="facet-label">{item.label}</span>
                             ) : (
@@ -82,7 +93,7 @@ class Facets extends Component {
         </div>
       );
     } else {
-      return <div></div>;
+      return null;
     }
   }
 }
