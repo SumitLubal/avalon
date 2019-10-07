@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const CollectionListStickyUtils = ({
   filter,
@@ -50,6 +51,13 @@ const CollectionListStickyUtils = ({
       </div>
     </section>
   );
+};
+
+CollectionListStickyUtils.propTypes = {
+  filter: PropTypes.string,
+  handleFilterChange: PropTypes.func,
+  handleSortChange: PropTypes.func,
+  sort: PropTypes.string
 };
 
 export default CollectionListStickyUtils;

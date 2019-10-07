@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-import CollectionCard from './collections/CollectionCard';
 import './collections/Collection.css';
 import CollectionListStickyUtils from './collections/CollectionListStickyUtils';
-import ButtonCollectionListShowAll from './collections/ButtonCollectionListShowAll';
+import CollectionsSortedByUnit from './collections/CollectionsSortedByUnit';
+import CollectionsSortedByAZ from './collections/CollectionsSortedByAZ';
+import PropTypes from 'prop-types';
 
 class CollectionList extends Component {
   constructor(props) {
@@ -48,29 +49,6 @@ class CollectionList extends Component {
     }
   }
 
-  groupByUnit(list) {
-    const map = new Map();
-    list.forEach(item => {
-      const collection = map.get(item.unit);
-      if (!collection) {
-        map.set(item.unit, [item]);
-      } else {
-        collection.push(item);
-      }
-    });
-    let groups = Array.from(map);
-    groups.sort((g1, g2) => {
-      if (g1[0] < g2[0]) {
-        return -1;
-      }
-      if (g1[0] > g2[0]) {
-        return 1;
-      }
-      return 0;
-    });
-    return groups;
-  }
-
   sortByAZ(list) {
     let sortedArray = list.slice();
     sortedArray.sort((col1, col2) => {
@@ -110,14 +88,6 @@ class CollectionList extends Component {
     this.setState({ sort: val });
   };
 
-  handleShowAll = event => {
-    if (event.target.text === 'Show all') {
-      event.target.text = 'Show less';
-    } else {
-      event.target.text = 'Show all';
-    }
-  };
-
   render() {
     const { filter, sort, filteredResult, maxItems } = this.state;
     return (
@@ -130,70 +100,26 @@ class CollectionList extends Component {
         />
         <div className="collection-list">
           {sort === 'az' ? (
-            <ul className="row list-unstyled">
-              {this.sortByAZ(filteredResult).map((col, index) => {
-                return (
-                  <li className="col-sm-4" key={col.id}>
-                    <CollectionCard
-                      attributes={col}
-                      showUnit={true}
-                    ></CollectionCard>
-                  </li>
-                );
-              })}
-            </ul>
+            <CollectionsSortedByAZ
+              filteredResult={filteredResult}
+              sortByAZ={this.sortByAZ}
+            />
           ) : (
-            this.groupByUnit(filteredResult).map((unitArr, index) => {
-              let unit = unitArr[0];
-              let collections = this.sortByAZ(unitArr[1]);
-
-              return (
-                <div key={unit}>
-                  <h2 className="headline collection-list-unit-headline">
-                    {unit}
-                  </h2>
-
-                  <div className="row">
-                    {collections.slice(0, maxItems).map((col, index) => {
-                      return (
-                        <div className="col-sm-4" key={col.id}>
-                          <CollectionCard attributes={col} showUnit={false} />
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  <div className="collapse" id={'collapse' + index}>
-                    <div className="row">
-                      {collections
-                        .slice(maxItems, collections.length)
-                        .map(col => {
-                          return (
-                            <div className="col-sm-4" key={col.id}>
-                              <CollectionCard
-                                attributes={col}
-                                showUnit={false}
-                              />
-                            </div>
-                          );
-                        })}
-                    </div>
-                  </div>
-
-                  <ButtonCollectionListShowAll
-                    collectionsLength={collections.length}
-                    maxItems={maxItems}
-                    handleShowAll={this.handleShowAll}
-                    index={index}
-                  />
-                </div>
-              );
-            })
+            <CollectionsSortedByUnit
+              filteredResult={filteredResult}
+              sortByAZ={this.sortByAZ}
+              maxItems={maxItems}
+            />
           )}
         </div>
       </div>
     );
   }
 }
+
+CollectionList.propTypes = {
+  baseUrl: PropTypes.string,
+  filter: PropTypes.bool
+};
 
 export default CollectionList;
