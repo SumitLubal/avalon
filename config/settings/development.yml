@@ -1,2 +1,13 @@
 domain:
-  port: 3000
+  host: av.library.uta.edu
+  port: 80
+  protocol: http
+
+streaming:
+  server: :nginx
+  stream_token_ttl: 20 #minutes
+  content_path: '/var/avalon/derivatives'
+  rtmp_base: 'rtmp://localhost/avalon'
+  http_base: 'https://av-shib.library.uta.edu/avalon'
+  default_quality: 'auto'
+
