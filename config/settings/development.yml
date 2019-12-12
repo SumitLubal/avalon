@@ -10,4 +10,7 @@ streaming:
   rtmp_base: 'rtmp://localhost/avalon'
   http_base: 'https://av-shib.library.uta.edu/avalon'
   default_quality: 'auto'
-
+auth:
+  configuration:
+    - :name: Avalon Shibboleth OAuth
+      :provider: :shibboleth

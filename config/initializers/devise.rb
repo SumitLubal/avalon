@@ -295,4 +295,12 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   OmniAuth.config.logger = Rails.logger
+  config.omniauth :shibboleth, {
+    :uid_field => 'uid',
+    :name_field => 'displayName',
+    :info_fields => {
+      :name => 'givenName',
+      :last_name => 'sn',
+      :email => 'mail'}
+  }
 end
